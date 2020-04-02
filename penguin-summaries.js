@@ -23,6 +23,10 @@ var rows=
     .text(function(penguins){return penguins.final});
     rows.append("td")
         .text(function(getquiz){
-        return getquiz
-    })};
+        return getquiz})
+        rows.append("img")
+        .attr("src",function(penguins){
+            return penguins.picture
+        })
+};
 
