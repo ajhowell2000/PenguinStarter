@@ -1,18 +1,26 @@
 var success=function(penguins)
 {
     console.log("Data collected",penguins);
+    console.log(penguins[0])
+    console.log(getmeanquiz(penguins[1].quizes))
     createtable(penguins);
-var getquiz=quizes.map(function(quiz){
-    return quiz.grade
-}
 
-)};
+};
 var failure= function(Errormsg){
     console.log("Something is wrong", Errormsg);};
 
 var penguinPromise=d3.json("classData.json");
 penguinPromise.then(success,failure);
- 
+
+// gets the mean quizgrade
+// Give it an array of quizzes
+var getmeanquiz= function(quizes){
+    var quizgrades= quizes.map(function(quiz){
+        return quiz.grade
+    })
+    return d3.mean(quizgrades)
+} 
+
 var createtable= function(penguins){
 var rows=
     d3.select("#classtable tbody")
@@ -20,13 +28,14 @@ var rows=
     .data(penguins)
     .enter()
     .append("tr")
-    .text(function(penguins){return penguins.final});
+    .text(function(penguin){return penguin.final[0].grade});
     rows.append("td")
-        .text(function(getquiz){
-        return getquiz})
+        .text(function(penguin){
+        return getmeanquiz(penguin.quizes)})
         rows.append("img")
-        .attr("src",function(penguins){
-            return penguins.picture
+        .attr("src",function(penguin){
+            // imgs/penguin.png
+            return "imgs/"+ penguin.picture
         })
 };
 
