@@ -21,21 +21,99 @@ var getmeanquiz= function(quizes){
     return d3.mean(quizgrades)
 } 
 
+//get mean homework grade
+var getmeanhw = function(homework)
+    {
+     var hwgrades = homework.map(function(hw)
+                                 {
+                                    return hw.grade
+                                })
+        return d3.mean(hwgrades)
+    };
+
+//get mean test grade
+var getmeantest = function(test)
+    {
+        var testgrades = test.map(function(tests)
+                                    {
+                                    return tests.grade
+                                    })
+        return d3.mean(testgrades)
+    };
+
+
+//create the table
 var createtable= function(penguins){
 var rows=
     d3.select("#classtable tbody")
     .selectAll("tr")
     .data(penguins)
     .enter()
-    .append("tr")
-    .text(function(penguin){return penguin.final[0].grade});
-    rows.append("td")
-        .text(function(penguin){
-        return getmeanquiz(penguin.quizes)})
+    .append("tr");
+ //image column
         rows.append("img")
         .attr("src",function(penguin){
             // imgs/penguin.png
             return "imgs/"+ penguin.picture
-        })
+        });
+//quiz mean column
+    rows.append("td")
+        .text(function(penguin){
+        return getmeanquiz(penguin.quizes)});
+
+//hw mean grade column
+    rows.append("td")
+        .text(function(penguin)
+             {
+                return getmeanhw(penguin.homework)
+            });
+//test mean grade column
+    rows.append("td")
+        .text(function(penguin)
+             {
+                return getmeantest(penguin.test)
+            });
+ //final grade column
+    rows.append("td")
+    .text(function(penguin){return penguin.final[0].grade});
 };
 
+//cleartable function
+var clearTable = function()
+    {
+        d3.selectAll("table tbody tr")
+            .remove()
+    };
+
+//sort function
+var headersort = function(penguin)
+    {
+//sort by quiz grades
+        d3.select("#quizzes")
+            .on("click", function()
+                {
+                    penguin.sort(function(a,b)
+                    {
+                        if(a.quizes > b.quizes) {return 1}
+                        else if(a.quizes < b.quizes) {return -1}
+                        else {return 0;}
+                    });
+            clearTable();
+            createtable(penguin);
+        });
+//sort by homework grades
+      d3.select("#homework")
+            .on("click", function()
+               {
+                    penguin.sort(function(a,b)
+                        {
+                            if(a.homework > b.homework) {return 1}
+                            else if(a.homework > b.homework) {return -1}
+                            else {return 0;}
+                    });
+          clearTable()
+          drawTable(penguin);
+      })
+//sort by test grades
+        
+    };
