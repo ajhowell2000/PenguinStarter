@@ -112,7 +112,7 @@ var headersort = function(penguins)
                             else {return 0;}
                     });
           clearTable()
-          drawTable(penguins);
+          createTable(penguins);
       });
 //sort by test grades
         
