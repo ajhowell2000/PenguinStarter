@@ -4,7 +4,7 @@ var success=function(penguins)
     console.log(penguins[0])
     console.log(getmeanquiz(penguins[1].quizes))
     createtable(penguins);
-
+    headersort(penguin);
 };
 var failure= function(Errormsg){
     console.log("Something is wrong", Errormsg);};
