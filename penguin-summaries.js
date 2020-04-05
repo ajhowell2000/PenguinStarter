@@ -4,7 +4,7 @@ var success=function(penguins)
     console.log(penguins[0])
     console.log(getmeanquiz(penguins[1].quizes))
     createtable(penguins);
-    headersort(penguin);
+    headersort(penguins);
 };
 var failure= function(Errormsg){
     console.log("Something is wrong", Errormsg);};
@@ -86,34 +86,34 @@ var clearTable = function()
     };
 
 //sort function
-var headersort = function(penguin)
+var headersort = function(penguins)
     {
 //sort by quiz grades
         d3.select("#quizzes")
             .on("click", function()
                 {
-                    penguin.sort(function(a,b)
+                    penguins.sort(function(a,b)
                     {
                         if(a.quizes > b.quizes) {return 1}
                         else if(a.quizes < b.quizes) {return -1}
                         else {return 0;}
                     });
             clearTable();
-            createtable(penguin);
+            createtable(penguins);
         });
 //sort by homework grades
       d3.select("#homework")
             .on("click", function()
                {
-                    penguin.sort(function(a,b)
+                    penguins.sort(function(a,b)
                         {
                             if(a.homework > b.homework) {return 1}
                             else if(a.homework > b.homework) {return -1}
                             else {return 0;}
                     });
           clearTable()
-          drawTable(penguin);
-      })
+          drawTable(penguins);
+      });
 //sort by test grades
         
     };
