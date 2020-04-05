@@ -115,5 +115,28 @@ var headersort = function(penguins)
           createTable(penguins);
       });
 //sort by test grades
+        d3.select("#test")  
+        .on("click", function()
+            {
+            penguins.sort(function(a,b)
+                          {
+                if(a.test > b.test) {return 1}
+                else if (a.test < b.test) {return -1}
+                else {return 0;}
+            });
+            clearTable()
+            createtable(penguins)
+        });
         
-    };
+        d3.select("#final")
+            .on("click", function()
+                {
+                penguins.sort(function(a,b)
+                {
+                    if (a.final > b.final) {return 1}
+                else if (a.final < b.final){return -1}
+                else {return 0}
+                });
+        clearTable()
+        createtable(penguins)
+        })}
