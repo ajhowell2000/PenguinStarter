@@ -139,4 +139,5 @@ var headersort = function(penguins)
                 });
         clearTable()
         createtable(penguins)
-        })}
+        });
+    };
