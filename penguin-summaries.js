@@ -2,10 +2,13 @@ var success=function(penguins)
 {
     console.log("Data collected",penguins);
     console.log(penguins[0])
-    console.log(getmeanquiz(penguins[1].quizes))
+    console.log(quizweight(penguins[0]))
+    console.log(finalweight(penguins[0])+(quizweight(penguins[0]))+(hwweight(penguins[0]))+ (testweight(penguins[0])))
+ console.log(getmeanquiz(penguins[1].quizes))
     createtable(penguins);
     headersort(penguins);
     console.log(finalweightedgrade(penguins[0]));
+    
 };
 var failure= function(Errormsg){
     console.log("Something is wrong", Errormsg);};
@@ -45,27 +48,24 @@ var getmeantest = function(test)
 //get final weighted grade(for the extra stuff)
 var testweight = function(penguin)
 {
-    var gettest = function(penguins)
-            {
-                return getmeantest(penguins.test)
-            };
-    gettest(penguin) * .30;
+            return getmeantest(penguin.test) * .30;
+    
 }
 var quizweight = function(penguin)
 {
-    getmeanquiz(penguin.quizes) * .20;
+   return getmeanquiz(penguin.quizes) * .20;
 }
 var finalweight = function(penguin)
 {
-    penguin.final[0].grade * .35;
+  return penguin.final[0].grade * .35;
 }
 var hwweight = function(penguin)
 {
-    getmeanhw(penguin.homework) * .15
+   return getmeanhw(penguin.homework) * .15
 }
 var finalweightedgrade = function(penguin)
 {
-    testweight(penguin) + quizweight(penguin) + finalweight(penguin) + hwweight(penguin);
+    return testweight(penguin)+ quizweight(penguin)+finalweight(penguin)+ hwweight(penguin);
 }
 
 //create the table
