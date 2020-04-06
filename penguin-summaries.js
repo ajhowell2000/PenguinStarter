@@ -5,6 +5,7 @@ var success=function(penguins)
     console.log(getmeanquiz(penguins[1].quizes))
     createtable(penguins);
     headersort(penguins);
+    console.log(finalweightedgrade(penguins[0]));
 };
 var failure= function(Errormsg){
     console.log("Something is wrong", Errormsg);};
@@ -41,6 +42,31 @@ var getmeantest = function(test)
         return d3.mean(testgrades)
     };
 
+//get final weighted grade(for the extra stuff)
+var testweight = function(penguin)
+{
+    var gettest = function(penguins)
+            {
+                return getmeantest(penguins.test)
+            };
+    gettest(penguin) * .30;
+}
+var quizweight = function(penguin)
+{
+    getmeanquiz(penguin.quizes) * .20;
+}
+var finalweight = function(penguin)
+{
+    penguin.final[0].grade * .35;
+}
+var hwweight = function(penguin)
+{
+    getmeanhw(penguin.homework) * .15
+}
+var finalweightedgrade = function(penguin)
+{
+    testweight(penguin) + quizweight(penguin) + finalweight(penguin) + hwweight(penguin);
+}
 
 //create the table
 var createtable= function(penguins){
@@ -76,6 +102,13 @@ var rows=
  //final grade column
     rows.append("td")
     .text(function(penguin){return penguin.final[0].grade});
+    
+    //column for weighted average of grades(extra stuff)
+    rows.append("td")
+        .text(function(penguin)
+             {
+              return finalweightedgrade(penguin)  
+            });
 };
 
 //cleartable function
@@ -94,8 +127,10 @@ var headersort = function(penguins)
                 {
                     penguins.sort(function(a,b)
                     {
-                        if(a.quizes > b.quizes) {return 1}
-                        else if(a.quizes < b.quizes) {return -1}
+                        var aquiz = getmeanquiz(a.quizes);
+                        var bquiz = getmeanquiz(b.quizes)
+                        if(aquiz > bquiz) {return 1}
+                        else if(aquiz < bquiz) {return -1}
                         else {return 0;}
                     });
             clearTable();
@@ -107,34 +142,40 @@ var headersort = function(penguins)
                {
                     penguins.sort(function(a,b)
                         {
-                            if(a.homework > b.homework) {return 1}
-                            else if(a.homework > b.homework) {return -1}
+                            var ahw = getmeanhw(a.homework);
+                            var bhw = getmeanhw(b.homework);
+                            if(ahw > bhw) {return 1}
+                            else if(ahw < bhw) {return -1}
                             else {return 0;}
                     });
           clearTable()
-          createTable(penguins);
+          createtable(penguins);
       });
 //sort by test grades
-        d3.select("#test")  
+        d3.select("#tests")  
         .on("click", function()
             {
             penguins.sort(function(a,b)
                           {
-                if(a.test > b.test) {return 1}
-                else if (a.test < b.test) {return -1}
+                var atest = getmeantest(a.test);
+                var btest = getmeantest(b.test);
+                if(atest > btest) {return 1}
+                else if (atest < btest) {return -1}
                 else {return 0;}
             });
             clearTable()
             createtable(penguins)
         });
-        
+//sort by final grade
         d3.select("#final")
             .on("click", function()
                 {
                 penguins.sort(function(a,b)
                 {
-                    if (a.final > b.final) {return 1}
-                else if (a.final < b.final){return -1}
+                  //  var afinal = a.final[0].grade
+                //    var bfinal = a.final[0].grade
+                    if (a.final[0].grade > b.final[0].grade) {return 1}
+                else if (a.final[0].grade < b.final[0].grade){return -1}
                 else {return 0}
                 });
         clearTable()
