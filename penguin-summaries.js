@@ -8,7 +8,6 @@ var success=function(penguins)
     createtable(penguins);
     headersort(penguins);
     console.log(finalweightedgrade(penguins[0]));
-    
 };
 var failure= function(Errormsg){
     console.log("Something is wrong", Errormsg);};
@@ -66,7 +65,7 @@ var hwweight = function(penguin)
 var finalweightedgrade = function(penguin)
 {
     return testweight(penguin)+ quizweight(penguin)+finalweight(penguin)+ hwweight(penguin);
-}
+};
 
 //create the table
 var createtable= function(penguins){
@@ -105,9 +104,10 @@ var rows=
     
     //column for weighted average of grades(extra stuff)
     rows.append("td")
+        .attr("class", "warning")
         .text(function(penguin)
              {
-              return finalweightedgrade(penguin)  
+              return finalweightedgrade(penguin) 
             });
 };
 
@@ -180,5 +180,20 @@ var headersort = function(penguins)
                 });
         clearTable()
         createtable(penguins)
+        });
+//sort by weighted final grade
+        d3.select("#weightedgrade")
+            .on("click", function()
+                {
+                penguins.sort(function(a,b)
+                    {
+                    var agrade = finalweightedgrade(a);
+                    var bgrade = finalweightedgrade(b);
+                    if(agrade > bgrade) {return 1}
+                    else if (agrade < bgrade) {return -1}
+                    else {return 0}
+                });
+            clearTable()
+            createtable(penguins)
         });
     };
